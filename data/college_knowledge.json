@@ -1,0 +1,205 @@
+[
+  {
+    "id": "time-001",
+    "category": "timings",
+    "title": "General College Operating Hours & Gate Timings",
+    "content": "The college operates Monday through Friday from 8:30 AM to 4:30 PM, and on alternate Saturdays from 9:00 AM to 1:00 PM (1st and 3rd Saturdays are working; 2nd and 4th Saturdays are off). Main Gate 1 (Academic Entrance) opens at 7:30 AM and closes at 8:00 PM. Gate 2 (Hostel & Sports Complex) is open 24/7 for authorized residential students with valid RFID campus ID cards. Students must enter campus by 8:45 AM to attend the first lecture slot at 9:00 AM.",
+    "keywords": ["college hours", "timings", "gate opening", "gate closing", "working days", "saturday timings", "campus hours"]
+  },
+  {
+    "id": "time-002",
+    "category": "timings",
+    "title": "Central Library Working Hours & Rules",
+    "content": "The Central Library (located on the 2nd and 3rd floors of the Ramanujan Learning Centre) is open on weekdays (Monday to Friday) from 8:00 AM to 9:00 PM. On Saturdays and Sundays, the reading hall is open from 9:00 AM to 6:00 PM. During mid-term and final examination periods, extended night reading hours operate until 11:30 PM. Each student can borrow up to 4 books for 14 days using their student Smart Card. Digital Library with IEEE, Springer, and ACM portal access is available during all operational hours.",
+    "keywords": ["library timings", "central library", "weekend library", "book borrow", "digital library", "exam reading hall"]
+  },
+  {
+    "id": "time-003",
+    "category": "timings",
+    "title": "Administrative, Accounts & Student Section Timings",
+    "content": "The Administrative Office and Accounts Section (Administrative Block, Ground Floor) are open for student queries and transactions from Monday to Friday, 10:00 AM to 1:30 PM and 2:30 PM to 4:30 PM. Counters are closed between 1:30 PM and 2:30 PM for lunch. Bonafide certificates, fee receipts, railway/bus concessions, and document verification requests can be submitted online through the ERP portal or offline at Counter 3.",
+    "keywords": ["office timings", "accounts section", "admin office", "bonafide certificate", "counter timings", "clerk office"]
+  },
+  {
+    "id": "time-004",
+    "category": "timings",
+    "title": "Cafeteria, Food Court & Canteen Timings",
+    "content": "The Main Food Court (adjacent to the Student Activity Centre) is open daily from 7:30 AM to 9:30 PM. Breakfast is served from 7:30 AM to 10:00 AM; Lunch from 12:00 PM to 3:00 PM; Snacks and beverages from 3:00 PM to 6:30 PM; Dinner for day-scholars and hostellers from 7:30 PM to 9:30 PM. The Nescafe Kiosk and Amul Parlour near Newton Block operate from 8:30 AM to 7:00 PM.",
+    "keywords": ["canteen", "cafeteria", "food court", "lunch timings", "breakfast", "dinner timings"]
+  },
+  {
+    "id": "time-005",
+    "category": "timings",
+    "title": "College Bus Schedules & Route Timings",
+    "content": "College buses operate on 18 designated city routes. Morning buses arrive at campus between 8:15 AM and 8:25 AM. In the evening, the primary departure shift leaves the Main Bus Bay at 4:45 PM sharp. A special late bus for project teams, sports teams, and library researchers departs at 6:30 PM on Routes A (Metro Station), Route B (Central Bus Station), and Route C (City Centre). Transport pass holders must carry their RFID bus passes.",
+    "keywords": ["bus timings", "college bus", "transport", "bus routes", "evening bus", "pickup time"]
+  },
+  {
+    "id": "dept-001",
+    "category": "departments",
+    "title": "Department of Computer Science & Engineering (CSE)",
+    "content": "The Department of Computer Science & Engineering is located in the Alan Turing Computing Block (Floors 2 to 4). It is headed by Dr. Rajesh Sharma (Head of Department). The department offers B.Tech in CSE, B.Tech with specialization in AI & ML, B.Tech in Cyber Security, and M.Tech in Computer Science. It features 8 advanced computing labs, including the NVIDIA GPU AI Lab, Cloud Computing Lab, and IoT Systems Lab. Office Email: cse.hod@college.edu | Phone: Ext. 201.",
+    "keywords": ["cse", "computer science", "alan turing block", "hod computer science", "rajesh sharma", "ai lab"]
+  },
+  {
+    "id": "dept-002",
+    "category": "departments",
+    "title": "Department of Electronics & Communication Engineering (ECE)",
+    "content": "The Department of Electronics & Communication Engineering is situated in the Nikola Tesla Block (Floors 1 & 2). Headed by Dr. Sunita Kulkarni (HOD), the department offers B.Tech in ECE and M.Tech in VLSI & Embedded Systems. Key facilities include the Cadence VLSI Design Lab, Texas Instruments Embedded Lab, and Microwave & Optical Fiber Lab. Office Email: ece.hod@college.edu | Phone: Ext. 301.",
+    "keywords": ["ece", "electronics", "telecommunication", "vlsi", "sunita kulkarni", "tesla block"]
+  },
+  {
+    "id": "dept-003",
+    "category": "departments",
+    "title": "Department of Mechanical Engineering (ME)",
+    "content": "The Department of Mechanical Engineering is situated in the Visvesvaraya Engineering Complex. Headed by Dr. Anand Verma (HOD), the department houses the Central Workshop, CNC Machining Centre, Robotics & Automation Lab, CAD/CAM Simulation Lab, and Automotive Systems Lab. The department regularly sponsors SAE BAJA and Formula Student racing teams. Office Email: mech.hod@college.edu | Phone: Ext. 401.",
+    "keywords": ["mechanical engineering", "mech", "workshop", "anand verma", "visvesvaraya", "cad cam"]
+  },
+  {
+    "id": "dept-004",
+    "category": "departments",
+    "title": "Department of Civil Engineering (CE)",
+    "content": "Located in the S.V. Complex (Ground & 1st Floor), the Civil Engineering department is headed by Dr. Meenakshi Sundaram. Specialized laboratories include Structural Engineering Lab, Geotechnical & Soil Mechanics Lab, Environmental Engineering Lab, and Total Station Surveying Station. Office Email: civil.hod@college.edu | Phone: Ext. 501.",
+    "keywords": ["civil engineering", "surveying", "geotechnical", "meenakshi sundaram", "structural lab"]
+  },
+  {
+    "id": "dept-005",
+    "category": "departments",
+    "title": "Department of Management Studies (MBA) & Department of AI & Data Science",
+    "content": "The Department of AI & Data Science is housed in Turing Block 4th floor, coordinated by Dr. Vikram Singhal. The School of Management Studies (MBA) is located in the Chanakya Management Block, headed by Prof. Rohini Desai, offering specializations in Marketing, Finance, HR, and Business Analytics. Office Email: mba.office@college.edu, aids.office@college.edu.",
+    "keywords": ["ai and data science", "mba", "management", "business analytics", "chanakya block", "vikram singhal"]
+  },
+  {
+    "id": "fac-001",
+    "category": "faculty",
+    "title": "Key Faculty Members & Consultation Hours - CSE",
+    "content": "1. Dr. Rajesh Sharma (Professor & HOD, CSE) - Cabin TB-301, Consultation: Mon & Wed 2:30 PM - 4:00 PM. Specialization: Distributed Systems & Distributed Algorithms. Email: r.sharma@college.edu.\n2. Dr. Priya Venkatesh (Associate Prof, AI/ML) - Cabin TB-312, Consultation: Tue & Thu 11:30 AM - 1:00 PM. Specialization: Deep Learning & NLP. Email: priya.v@college.edu.\n3. Prof. Amit Patel (Assistant Prof, Cloud Computing & Web Dev) - Cabin TB-205, Consultation: Mon & Fri 3:00 PM - 4:30 PM. Email: amit.patel@college.edu.\n4. Dr. Neha Saxena (Associate Prof, Cyber Security) - Cabin TB-318, Consultation: Wed & Fri 10:00 AM - 12:00 PM. Email: neha.s@college.edu.",
+    "keywords": ["faculty cse", "professors", "cabin number", "consultation hours", "rajesh sharma", "priya venkatesh", "amit patel", "neha saxena"]
+  },
+  {
+    "id": "fac-002",
+    "category": "faculty",
+    "title": "Key Faculty Members & Consultation Hours - ECE & Basic Sciences",
+    "content": "1. Dr. Sunita Kulkarni (Professor & HOD, ECE) - Cabin NT-201, Consultation: Mon & Thu 3:00 PM - 4:30 PM. Email: sunita.k@college.edu.\n2. Dr. R. K. Nambiar (Professor, VLSI Design) - Cabin NT-208, Consultation: Tue & Fri 2:00 PM - 3:30 PM. Email: rk.nambiar@college.edu.\n3. Dr. Sanjeev Gupta (HOD, Mathematics & Dean Academics) - Cabin AB-104, Consultation: Mon, Wed, Fri 11:00 AM - 12:30 PM. Email: dean.academics@college.edu.",
+    "keywords": ["faculty ece", "sunita kulkarni", "nambiar", "sanjeev gupta", "dean academics", "cabin number"]
+  },
+  {
+    "id": "crs-001",
+    "category": "courses",
+    "title": "Undergraduate Programs & Degree Offerings",
+    "content": "The college offers four-year full-time B.Tech programs in:\n1. Computer Science & Engineering (180 seats)\n2. Artificial Intelligence & Machine Learning (120 seats)\n3. Electronics & Communication Engineering (120 seats)\n4. Information Technology (60 seats)\n5. Mechanical Engineering (60 seats)\n6. Civil Engineering (60 seats)\nAll B.Tech programs are affiliated with the State Technological University and accredited by the National Board of Accreditation (NBA) with Tier-1 status.",
+    "keywords": ["courses", "btech", "programs", "degrees", "seats", "branches", "curriculum"]
+  },
+  {
+    "id": "crs-002",
+    "category": "courses",
+    "title": "Credit System, Electives & Minor Specialization",
+    "content": "Under the Choice Based Credit System (CBCS), a student must earn 160 credits over 8 semesters to qualify for the B.Tech degree. From the 5th semester onward, students can select Professional Electives (e.g., Cloud Architecture, Deep Learning, Blockchain, Cyber Forensics) and Open Electives (e.g., Financial Markets, Project Management, Intellectual Property Rights). Students with a CGPA >= 7.5 can enroll in an additional Minor Degree program (20 extra credits) in Data Science, Cyber Security, or Entrepreneurship.",
+    "keywords": ["credits", "electives", "minor degree", "cbcs", "syllabus", "credit requirements", "open elective"]
+  },
+  {
+    "id": "fee-001",
+    "category": "fees",
+    "title": "Annual Tuition & Academic Fee Structure",
+    "content": "Annual Tuition Fee for B.Tech programs:\n- State Quota (Merit/CET): INR 85,000 per academic year\n- All-India / Management Quota: INR 1,45,000 per academic year\n- Laboratory & Internet Charges: INR 12,000 per year\n- Library & Student Welfare Fund: INR 5,000 per year\n- One-time Refundable Caution Deposit: INR 10,000 (at initial admission)\nFees can be paid in two equal installments: Semester 1 / Odd Semester fee is due by August 10th; Semester 2 / Even Semester fee is due by January 15th.",
+    "keywords": ["fee structure", "tuition fees", "college fees", "installment", "caution deposit", "annual fee", "how much fee"]
+  },
+  {
+    "id": "fee-002",
+    "category": "fees",
+    "title": "Hostel, Mess & Bus Fee Structure",
+    "content": "Hostel & Living Fees:\n- Twin Sharing Non-AC Room: INR 65,000 per year\n- Twin Sharing AC Room: INR 85,000 per year\n- 4-Sharing Non-AC Room: INR 45,000 per year\n- Mess Advance (All 4 meals - veg & non-veg option): INR 42,000 per year (INR 3,500/month adjusted on actual basis)\n- College Bus Transport Fee: Ranges from INR 18,000 to INR 26,000 per year depending on route distance (Route Slab 1: <10km, Slab 2: 10-20km, Slab 3: >20km).",
+    "keywords": ["hostel fee", "mess fee", "bus fee", "transport fee", "ac room", "non ac room"]
+  },
+  {
+    "id": "fee-003",
+    "category": "fees",
+    "title": "Payment Portal, Bank Account & Late Fine Policy",
+    "content": "Fees must be paid through the official Student ERP Portal (https://erp.college.edu/payments) via NetBanking, UPI, Debit/Credit Card with zero merchant surcharge. Alternatively, NEFT/RTGS payments can be made to:\n- Bank Name: State Bank of India\n- Account Name: College Academic Trust\n- Account No: 38479201948\n- IFSC Code: SBIN0004921\nLate Fee Policy: A grace period of 7 calendar days is permitted after the due date. From day 8 to 15, a late fee fine of INR 100/day applies. Beyond 15 days, student portal access is withheld until accounts approval.",
+    "keywords": ["payment portal", "how to pay fee", "late fee", "bank details", "ifsc code", "account number", "fine"]
+  },
+  {
+    "id": "exam-001",
+    "category": "examinations",
+    "title": "Examination Structure, Timetable & Schedule",
+    "content": "Each semester comprises two Internal Assessment Tests (Mid-Sem Exams) and one University End-Semester Examination:\n- Mid-Sem 1: Held in Week 6 of the academic semester (covers Units 1 & 2, max 30 marks, weightage 20%).\n- Mid-Sem 2: Held in Week 12 of the semester (covers Units 3, 4 & 5, max 30 marks, weightage 20%).\n- Practical Laboratory Exams: Held in Week 14.\n- End-Semester Theory Exams: Commence in Week 15 (covers full syllabus, max 100 marks, scaled to 50%).\nTimetables are published on the college notice board and ERP portal 3 weeks before examinations.",
+    "keywords": ["exam schedule", "mid sem", "end sem", "internals", "examination timetable", "practical exam", "dates"]
+  },
+  {
+    "id": "exam-002",
+    "category": "examinations",
+    "title": "Attendance Requirement (75% Rule) & Hall Ticket Eligibility",
+    "content": "Students must maintain a minimum of 75% aggregate attendance in each registered subject to be eligible for End-Semester examinations. A medical relaxation of up to 10% (i.e. minimum 65% attendance) may be condoned by the Dean of Academics upon timely submission of authorized medical certificates within 3 days of resuming college. Hall tickets are generated automatically on the ERP portal 5 days before exams only for students with cleared dues and >= 75% attendance.",
+    "keywords": ["attendance rule", "75 percent attendance", "medical certificate", "hall ticket", "admit card", "detained", "exam eligibility"]
+  },
+  {
+    "id": "exam-003",
+    "category": "examinations",
+    "title": "Grading System (CGPA), Re-evaluation & Backlog Policy",
+    "content": "Academic Grading is on a 10-point scale: O (Outstanding, 10), A+ (Excellent, 9), A (Very Good, 8), B+ (Good, 7), B (Above Average, 6), C (Average, 5), P (Pass, 4), F (Fail, 0). Minimum passing grade is 40% in internal + external combined.\nRe-evaluation: Students can apply for digital copy verification (INR 300/subject) and paper re-evaluation (INR 750/subject) within 10 days of result announcement. Supplementary/Backlog examinations are held during the winter and summer semester breaks.",
+    "keywords": ["grading system", "cgpa", "sgpa", "passing marks", "re-evaluation", "backlog exam", "rechecking"]
+  },
+  {
+    "id": "place-001",
+    "category": "placements",
+    "title": "Training & Placement (T&P) Cell & Placement Statistics",
+    "content": "The Training & Placement Cell is located on the 1st Floor of the Corporate Relations Centre. Over 180+ companies visit campus annually. Current batch highlights:\n- Highest Package: INR 44.5 LPA (Offered by Amazon Web Services)\n- Average Package (Overall B.Tech): INR 7.8 LPA\n- Average Package (CSE / IT): INR 9.2 LPA\n- Median Package: INR 6.5 LPA\n- Placement Percentage: 91.4% of eligible registered students placed.\nTop Recruiters: Microsoft, Amazon, Google, Cisco, TCS Digital, Infosys, Cognizant, Wipro, L&T, Tata Motors, Deloitte, Bosch.",
+    "keywords": ["placements", "highest package", "average package", "placement cell", "recruiters", "t&p cell", "companies"]
+  },
+  {
+    "id": "place-002",
+    "category": "placements",
+    "title": "Placement Eligibility Criteria & Internship NOC Process",
+    "content": "Placement Drive Eligibility:\n1. Minimum 60% or 6.5 CGPA throughout 10th, 12th, and ongoing B.Tech without standing backlogs (individual company criteria like 7.0+ CGPA may apply).\n2. 80% attendance in Pre-Placement Training (Aptitude, Soft Skills, Mock Interviews, Data Structures & Coding).\nInternships & NOC: Students in 6th and 8th semesters eligible for off-campus/on-campus internships must submit their offer letter to the T&P Cell to receive the Dean's Academic No Objection Certificate (NOC). Full-semester 8th-semester industry internships are credited as 12 credits.",
+    "keywords": ["placement eligibility", "internship noc", "backlog criteria", "cgpa requirement", "placement training"]
+  },
+  {
+    "id": "sch-001",
+    "category": "scholarships",
+    "title": "Institutional Merit & Fee Concession Scholarships",
+    "content": "The college offers several merit-based fee concessions:\n1. Chairman's Merit Scholarship: 100% tuition fee waiver for state rank holders (Top 1000 in state entrance CET/JEE Mains < 20,000 rank).\n2. Academic Excellence Award: 50% tuition fee waiver for the branch topper of each department in each academic year (minimum CGPA 9.25 required).\n3. Sports Quota Scholarship: 25% to 50% fee concession for students who have represented the university at State or National level sports championships.\n4. Sibling Concession: 15% tuition concession for the second sibling studying concurrently.",
+    "keywords": ["scholarships", "merit scholarship", "fee waiver", "fee concession", "sports scholarship", "topper award"]
+  },
+  {
+    "id": "sch-002",
+    "category": "scholarships",
+    "title": "Government Scholarships (NSP, Post-Matric, e-Kalyan) & How to Apply",
+    "content": "Students can avail various Central and State Government scholarships:\n1. National Scholarship Portal (NSP) Central Sector Scheme: For family income < INR 4.5 LPA, providing INR 12,000/year for UG.\n2. State Post-Matric Scholarship (SC/ST/OBC/Minorities): Full tuition fee reimbursement through State Welfare Department.\n3. Pragati Scholarship for Girls: AICTE scheme offering INR 50,000/year for girl students in engineering.\nHow to Apply: Fill the online application on NSP/State portal, print the submission acknowledgment, and submit original income certificate, caste certificate, fee receipt, and marks cards at Student Section Counter 4 for institutional verification before October 31st.",
+    "keywords": ["government scholarship", "nsp", "post matric", "pragati scholarship", "aicte scholarship", "income certificate", "how to apply scholarship"]
+  },
+  {
+    "id": "facil-001",
+    "category": "facilities",
+    "title": "Campus Classroom Directory, Blocks & Room Numbering Guide",
+    "content": "Campus Building Codes & Room Navigation:\n- Alan Turing Block (TB): TB-101 to TB-115 (Ground floor: Basic Science Labs), TB-201 to TB-220 (2nd Floor: IT Dept & Labs), TB-301 to TB-325 (3rd Floor: CSE Dept & HOD Office), TB-401 to TB-420 (4th Floor: AI/DS Labs & Seminar Hall).\n- Isaac Newton Block (NB): NB-101 to NB-120 (First year classrooms), NB-201 to NB-220 (ECE classrooms), NB-301 to NB-320 (Mechanical classrooms).\n- Srinivasa Ramanujan Centre (RC): Central Library, Central Auditorium (1200 capacity), Digital Resource Center.\n- Visvesvaraya Complex (VC): Heavy Machinery Labs, Workshops, Foundry, Material Testing.",
+    "keywords": ["classroom", "room number", "blocks", "newton block", "turing block", "ramanujan hall", "where is room", "campus navigation"]
+  },
+  {
+    "id": "facil-002",
+    "category": "facilities",
+    "title": "Campus Wi-Fi, Computer Centers & Health Clinic",
+    "content": "1. Campus Wi-Fi (CampusNet): High-speed Wi-Fi covers all academic blocks, hostels, and libraries. To connect, join SSID 'CampusNet-Secure', open browser to http://login.campus.edu, and enter your Student ERP Roll Number & password.\n2. Central Computing Centre (CCC): Located in Turing Block 1st floor, with 250 high-end workstations open from 8:00 AM to 8:00 PM for project and lab work.\n3. Health Centre & Infirmary: Situated next to Hostel Block B. Open 24/7 with a resident Medical Officer and nursing staff. Free basic emergency care, basic medicines, and an on-campus ambulance are available. Emergency Ext: 108 / 112.",
+    "keywords": ["wifi", "wifi password", "campusnet", "computing center", "health center", "doctor", "clinic", "ambulance", "hospital"]
+  },
+  {
+    "id": "facil-003",
+    "category": "facilities",
+    "title": "Sports Complex, Gymnasium & Student Amenities",
+    "content": "The campus boasts a comprehensive sports pavilion including:\n- Olympic-standard 400m synthetic running track\n- 2 Floodlit Basketball Courts & 2 Tennis Courts\n- Indoor Badminton Complex (4 wooden courts)\n- Modern Gymnasium (Air-conditioned, separate timings: Girls 6:00 AM - 8:00 AM & 5:00 PM - 7:00 PM; Boys 8:00 AM - 10:00 AM & 7:00 PM - 9:00 PM)\n- Other amenities: On-campus State Bank ATM near Main Canteen, Stationery & High-Speed Xerox Centre (Ground Floor, SAC), Lost & Found Desk at Security Head Office.",
+    "keywords": ["sports", "gym", "gymnasium", "badminton", "basketball", "atm", "xerox", "lost and found", "stationery"]
+  },
+  {
+    "id": "event-001",
+    "category": "events",
+    "title": "College Annual Fests, Hackathons & Cultural Events",
+    "content": "Key Annual Events:\n1. 'AURA' - Annual Inter-Collegiate Cultural Festival held every March featuring celebrity pro-nites, dance competitions, rock battles, and fashion showcases.\n2. 'INNOVATEX' - Annual National Technical Symposium held in October featuring paper presentations, robotics competitions (RoboWars), and design challenges.\n3. 'HACK-CAMPUS' - 36-Hour National Flagship Hackathon with prizes over INR 3,00,000, sponsored by leading tech companies, organized every February.\n4. 'SPARDHA' - Annual Sports Olympiad spanning athletics, football, cricket, and volleyball in January.",
+    "keywords": ["fests", "aura", "innovatex", "hackathon", "cultural fest", "technical fest", "sports meet", "annual events"]
+  },
+  {
+    "id": "event-002",
+    "category": "events",
+    "title": "Student Clubs, Technical Societies & How to Join",
+    "content": "The college hosts over 25+ student-led clubs:\n- Technical: Google Developer Student Club (GDSC), ACM Student Chapter, Coding Ninjas Club, Robotics & Drones Club (AeroClub).\n- Cultural: 'Rhythms' Dance Crew, 'Sargam' Music Society, 'Abhinaya' Dramatics Club, Fine Arts & Photography Club (LensCraft).\n- Social & Leadership: Rotaract Club, NSS (National Service Scheme), NCC, Toastmasters Public Speaking Club.\nClub Registrations open during the 'Club Carnival' held in the 2nd week of the odd semester. Students can register via the Student Activity portal (clubs.college.edu).",
+    "keywords": ["clubs", "gdsc", "acm", "robotics club", "coding club", "music club", "how to join clubs", "societies"]
+  }
+]

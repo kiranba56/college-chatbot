@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Official College Chatbot with Flask Backend, Native SQLite Database, RAG, and Gemini LLM. Instant answers for college timings, fees, faculty, exams, placements, and campus facilities.">
+    <title>{{ college_short_name }} | Intelligent Student Assistant</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <!-- Background Animated Blobs -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <div class="app-layout">
+        <!-- Top Navigation Bar -->
+        <header class="navbar" id="mainNavbar">
+            <div class="nav-left">
+                <div class="college-logo-container">
+                    <div class="logo-shield">
+                        <img src="/static/img/jgi-logo.png" class="logo-shield">
+                    </div>
+                    <div class="pulse-indicator" title="RAG Engine Active"></div>
+                </div>
+                <div class="college-branding">
+                    <h1 class="college-title">Jain Institute of Technology Davangere</h1>
+                    <div class="bot-badge-row">
+                        <span class="badge-primary"><i class="fa-solid fa-microchip"></i> CampusAI Assistant</span>
+                        <span class="badge-rag" id="ragStatusBadge"><i class="fa-solid fa-server"></i> Flask Backend Active</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <button class="nav-btn" id="btnOpenExplorer" title="Explore Campus Knowledge Base">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span class="btn-text">Knowledge Directory</span>
+                </button>
+                <button class="nav-btn" id="btnOpenAdmin" title="Add Campus Notice or Policy">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <span class="btn-text">Post Notice</span>
+                </button>
+                <button class="nav-btn" id="btnOpenStatus" title="System Diagnostics & API Settings">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span class="btn-text">System Info</span>
+                </button>
+                <button class="icon-toggle-btn" id="btnThemeToggle" title="Toggle Light/Dark Theme"
+                    aria-label="Toggle theme">
+                    <i class="fa-solid fa-moon theme-icon"></i>
+                </button>
+                <button class="icon-toggle-btn" id="btnClearChat" title="Reset Conversation" aria-label="Clear chat">
+                    <i class="fa-solid fa-arrow-rotate-right"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Category Filter Ribbon -->
+        <nav class="category-ribbon-wrapper" aria-label="Campus Information Categories">
+            <div class="ribbon-label"><i class="fa-solid fa-filter"></i> Quick Filter:</div>
+            <div class="category-scroll-container" id="categoryContainer">
+                {% for cat in categories %}
+                <button class="category-chip {% if cat.id == 'all' %}active{% endif %}" data-category="{{ cat.id }}"
+                    id="chip-{{ cat.id }}">
+                    <i class="{{ cat.icon }}"></i>
+                    <span>{{ cat.name }}</span>
+                </button>
+                {% endfor %}
+            </div>
+        </nav>
+
+        <!-- Chat Main Area -->
+        <main class="chat-viewport" id="chatViewport">
+            <div class="chat-container" id="chatContainer">
+
+                <!-- Welcome Hero View (Shown on new session) -->
+                <div class="welcome-hero" id="welcomeHero">
+                    <div class="hero-icon-card">
+                        <div class="hero-icon-circle">
+                            <img src="/static/img/jgi-logo.png" class="logo-shield">
+                        </div>
+                    </div>
+                    <h2 class="hero-heading">Welcome to <span class="gradient-text">JITD</span></h2>
+                    <p class="hero-subtext">
+                        Your 24/7 intelligent single-point campus guide. Ask anything about college hours, department
+                        contacts, courses, fees, examination schedules, placement statistics, scholarships, classroom
+                        locators, or campus fests!
+                    </p>
+
+                    <!-- Feature Pills -->
+                    <div class="hero-features">
+                        <span class="feature-tag"><i class="fa-solid fa-bolt"></i> Instant Vector
+                            Search</span>
+                        <span class="feature-tag"><i class="fa-solid fa-shield-halved"></i> Verified Campus
+                            Records</span>
+                        <span class="feature-tag"><i class="fa-solid fa-microphone"></i> Voice Enabled</span>
+                        <span class="feature-tag"><i class="fa-solid fa-server"></i> Flask Native RAG</span>
+                    </div>
+
+                    <!-- Quick Starter Queries Grid -->
+                    <div class="quick-prompts-section">
+                        <h3 class="quick-prompts-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Popular
+                            Inquiries</h3>
+                        <div class="prompt-cards-grid" id="promptCardsGrid">
+                            <div class="prompt-card"
+                                data-prompt="What are the central library working hours on weekdays and weekends?">
+                                <div class="prompt-card-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+                                <div class="prompt-card-content">
+                                    <span class="prompt-card-title">Library Hours</span>
+                                    <span class="prompt-card-desc">Weekday & weekend reading hall timings & book
+                                        borrowing rules</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                            </div>
+
+                            <div class="prompt-card"
+                                data-prompt="What is the tuition fee structure, payment portal, and late fine policy?">
+                                <div class="prompt-card-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                                <div class="prompt-card-content">
+                                    <span class="prompt-card-title">Fees & Payment</span>
+                                    <span class="prompt-card-desc">B.E tuition fee, ERP portal steps, and installment
+                                        due dates</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                            </div>
+
+                            <div class="prompt-card"
+                                data-prompt="What are the placement statistics, top companies, and highest package?">
+                                <div class="prompt-card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                                <div class="prompt-card-content">
+                                    <span class="prompt-card-title">Campus Placements</span>
+                                    <span class="prompt-card-desc">Highest & average CTC packages, Amazon/Microsoft
+                                        drives</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                            </div>
+
+                            <div class="prompt-card"
+                                data-prompt="Where is Alan Turing Block and how can I find room TB-301?">
+                                <div class="prompt-card-icon"><i class="fa-solid fa-compass"></i></div>
+                                <div class="prompt-card-content">
+                                    <span class="prompt-card-title">Classrooms & Navigation</span>
+                                    <span class="prompt-card-desc">Turing & Newton Block room numbering guide and lab
+                                        locations</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                            </div>
+
+                            <div class="prompt-card"
+                                data-prompt="What is the 75% attendance rule for semester exams and hall tickets?">
+                                <div class="prompt-card-icon"><i class="fa-solid fa-user-clock"></i></div>
+                                <div class="prompt-card-content">
+                                    <span class="prompt-card-title">Exam Attendance Policy</span>
+                                    <span class="prompt-card-desc">75% criteria, medical condonation, and ERP hall
+                                        ticket eligibility</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                            </div>
+
+                            <div class="prompt-card"
+                                data-prompt="What institutional and government scholarships are available?">
+                                <div class="prompt-card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                                <div class="prompt-card-content">
+                                    <span class="prompt-card-title">Scholarships & Aid</span>
+                                    <span class="prompt-card-desc">Merit fee waivers, NSP portal steps, and documents
+                                        required</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Message Stream -->
+                <div class="messages-list" id="messagesList" style="display: none;"></div>
+
+                <!-- Typing / RAG Search Indicator -->
+                <div class="typing-indicator-container" id="typingIndicator" style="display: none;">
+                    <div class="bot-avatar-mini">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="typing-bubble">
+                        <div class="rag-search-step" id="ragStatusText">
+                            <span class="spinner-dot"></span> Searching knowledge base & vector embeddings...
+                        </div>
+                        <div class="dots-wave">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Suggested Follow-ups Bar -->
+        <div class="suggested-chips-bar" id="suggestedChipsBar" style="display: none;">
+            <div class="suggested-label"><i class="fa-solid fa-lightbulb"></i> Suggested Follow-ups:</div>
+            <div class="suggested-chips-scroll" id="suggestedChipsList"></div>
+        </div>
+
+        <!-- Chat Input Dock -->
+        <footer class="input-dock" id="inputDock">
+            <div class="input-container">
+                <button class="voice-btn" id="btnVoiceInput" title="Speak your question (Speech to Text)"
+                    aria-label="Voice input">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+
+                <div class="input-field-wrapper">
+                    <textarea id="chatInput" class="chat-textarea" rows="1"
+                        placeholder="Ask about college timings, courses, fees, exams, faculty, rooms, scholarships..."
+                        aria-label="Student Query Input"></textarea>
+                </div>
+
+                <button class="send-btn" id="btnSendMessage" title="Send Question" aria-label="Send message">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+
+            <div class="dock-subinfo">
+                <span><i class="fa-solid fa-shield-check"></i> Powered by Flask Native RAG & Gemini AI</span>
+                <span class="shortcut-tip">Press <b>Enter ↵</b> to send • <b>Shift + Enter</b> for new line</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL 1: Knowledge Base Explorer / Campus Directory -->
+    <!-- ========================================================================= -->
+    <div class="modal-backdrop" id="explorerModal">
+        <div class="modal-card modal-large">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <div class="modal-icon"><i class="fa-solid fa-book-atlas"></i></div>
+                    <div>
+                        <h3 class="modal-title">Official Campus Knowledge Directory</h3>
+                        <p class="modal-subtitle">Browse verified college policies, notices, timings, and department
+                            info</p>
+                    </div>
+                </div>
+                <button class="modal-close-btn" id="btnCloseExplorer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="explorer-toolbar">
+                <div class="search-input-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="explorerSearchInput"
+                        placeholder="Filter by keyword (e.g., library, tuition, hod, exam, turing)...">
+                </div>
+                <div class="category-select-wrapper">
+                    <select id="explorerCategoryFilter" class="custom-select">
+                        <option value="all">All Categories</option>
+                        {% for cat in categories %}
+                        {% if cat.id != 'all' %}
+                        <option value="{{ cat.id }}">{{ cat.name }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-body-scrollable">
+                <div class="documents-grid" id="explorerGrid">
+                    <div class="loading-state">Loading knowledge records...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL 2: Add Notice / Admin Knowledge Input -->
+    <!-- ========================================================================= -->
+    <div class="modal-backdrop" id="adminModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <div class="modal-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                    <div>
+                        <h3 class="modal-title">Publish New Campus Notice / FAQ</h3>
+                        <p class="modal-subtitle">Add information to the RAG vector store for instant student access</p>
+                    </div>
+                </div>
+                <button class="modal-close-btn" id="btnCloseAdmin"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="addNoticeForm" class="modal-form">
+                <div class="form-group">
+                    <label for="noticeCategory">Category</label>
+                    <select id="noticeCategory" class="custom-select" required>
+                        <option value="timings">Timings & Operating Hours</option>
+                        <option value="departments">Departments</option>
+                        <option value="faculty">Faculty Directory</option>
+                        <option value="courses">Courses & Curriculum</option>
+                        <option value="fees">Fees & Payments</option>
+                        <option value="examinations">Examinations & Results</option>
+                        <option value="placements">Placements & Careers</option>
+                        <option value="scholarships">Scholarships & Financial Aid</option>
+                        <option value="facilities">Campus Facilities & Classrooms</option>
+                        <option value="events">Events, Fests & Clubs</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="noticeTitle">Notice / Item Title</label>
+                    <input type="text" id="noticeTitle" class="form-input"
+                        placeholder="e.g., Odd Semester Fee Extension Notice" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="noticeContent">Detailed Content / Facts</label>
+                    <textarea id="noticeContent" class="form-textarea" rows="4"
+                        placeholder="Full notice details including dates, timings, room numbers, contact info..."
+                        required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="noticeKeywords">Keywords (comma-separated for search boost)</label>
+                    <input type="text" id="noticeKeywords" class="form-input"
+                        placeholder="e.g., fee deadline, late fine, accounts counter">
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="btnCancelNotice">Cancel</button>
+                    <button type="submit" class="btn-primary" id="btnSubmitNotice">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Index & Save Notice
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL 3: System Status & Flask Settings -->
+    <!-- ========================================================================= -->
+    <div class="modal-backdrop" id="statusModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <div class="modal-icon"><i class="fa-solid fa-server"></i></div>
+                    <div>
+                        <h3 class="modal-title">System Architecture & Status</h3>
+                        <p class="modal-subtitle">Real-time status of Flask backend, local SQLite database, and AI models</p>
+                    </div>
+                </div>
+                <button class="modal-close-btn" id="btnCloseStatus"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="modal-body-scrollable">
+                <div class="status-cards-grid">
+                    <div class="status-metric-card">
+                        <div class="status-metric-label">Backend Server</div>
+                        <div class="status-metric-value text-success"><i class="fa-solid fa-circle-check"></i> Online
+                            (Flask)</div>
+                    </div>
+                    <div class="status-metric-card">
+                        <div class="status-metric-label">Database Engine</div>
+                        <div class="status-metric-value" id="statusSupabaseValue">Checking...</div>
+                    </div>
+                    <div class="status-metric-card">
+                        <div class="status-metric-label">AI / LLM Model</div>
+                        <div class="status-metric-value" id="statusLLMValue">Checking...</div>
+                    </div>
+                    <div class="status-metric-card">
+                        <div class="status-metric-label">Indexed Documents</div>
+                        <div class="status-metric-value" id="statusDocsValue">29 Entries</div>
+                    </div>
+                </div>
+
+                <div class="setup-guide-box">
+                    <h4><i class="fa-solid fa-server"></i> 100% Flask Native Backend Architecture</h4>
+                    <p>This campus chatbot is powered natively by Flask and local embedded SQLite:</p>
+                    <ul>
+                        <li><b>Standalone Flask Server:</b> No external Supabase or cloud setup required.</li>
+                        <li><b>Persistent Local Storage:</b> College knowledge, chat logs, and student ratings are saved in <code>data/college_chatbot.db</code>.</li>
+                        <li><b>High-Speed Vector Engine:</b> Semantic search and cosine similarity are computed directly within Flask.</li>
+                        <li><b>Gemini AI:</b> Optional Gemini API key in <code>.env</code> provides neural response generation.</li>
+                    </ul>
+                    <div class="sync-actions-row">
+                        <button class="btn-primary" id="btnSyncSupabase">
+                            <i class="fa-solid fa-arrows-rotate"></i> Re-index Campus Knowledge Base
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Element -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Application JavaScript -->
+    <script src="/static/js/app.js"></script>
+</body>
+
+</html>
