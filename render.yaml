@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: college-chatbot
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DEBUG
+        value: "False"
+      - key: COLLEGE_NAME
+        value: "National Institute of Science & Technology (NIST)"
+      - key: COLLEGE_SHORT_NAME
+        value: "NIST Campus AI"
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
