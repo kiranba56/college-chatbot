@@ -36,28 +36,31 @@
         <header class="navbar" id="mainNavbar">
             <div class="nav-left">
                 <div class="college-logo-container">
-                    <div class="logo-shield">
-                        <img src="static/img/jgi-logo.png" class="logo-shield">
+                    <div class="logo-shield-wrapper">
+                        <img src="static/img/jgi-logo.png" class="college-logo-img" alt="College Crest">
                     </div>
-                    <div class="pulse-indicator" title="RAG Engine Active"></div>
+                    <div class="pulse-indicator" title="Campus AI Engine Active"></div>
                 </div>
                 <div class="college-branding">
-                    <h1 class="college-title">Jain Institute of Technology Davangere</h1>
+                    <div class="college-title-row">
+                        <h1 class="college-title">Jain Institute of Technology Davangere</h1>
+                        <span class="badge-accreditation">NAAC 'A' Grade</span>
+                    </div>
                     <div class="bot-badge-row">
-                        <span class="badge-primary"><i class="fa-solid fa-microchip"></i> CampusAI Assistant</span>
-                        <span class="badge-rag" id="ragStatusBadge"><i class="fa-solid fa-server"></i> Flask Backend Active</span>
+                        <span class="badge-primary"><i class="fa-solid fa-graduation-cap"></i> CampusAI Advisor</span>
+                        <span class="badge-rag" id="ragStatusBadge"><span class="status-live-dot"></span> Online & Verified</span>
                     </div>
                 </div>
             </div>
 
             <div class="nav-right">
                 <button class="nav-btn" id="btnOpenExplorer" title="Explore Campus Knowledge Base">
-                    <i class="fa-solid fa-folder-open"></i>
+                    <i class="fa-solid fa-compass"></i>
                     <span class="btn-text">Knowledge Directory</span>
                 </button>
-                <button class="nav-btn" id="btnOpenAdmin" title="Add Campus Notice or Policy">
-                    <i class="fa-solid fa-plus-circle"></i>
-                    <span class="btn-text">Post Notice</span>
+                <button class="nav-btn" id="btnOpenAdmin" title="Post Official Campus Notice">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span class="btn-text">Notices</span>
                 </button>
                 <button class="nav-btn" id="btnOpenStatus" title="System Diagnostics & API Settings">
                     <i class="fa-solid fa-sliders"></i>
@@ -68,14 +71,14 @@
                     <i class="fa-solid fa-moon theme-icon"></i>
                 </button>
                 <button class="icon-toggle-btn" id="btnClearChat" title="Reset Conversation" aria-label="Clear chat">
-                    <i class="fa-solid fa-arrow-rotate-right"></i>
+                    <i class="fa-solid fa-rotate-left"></i>
                 </button>
             </div>
         </header>
 
         <!-- Category Filter Ribbon -->
         <nav class="category-ribbon-wrapper" aria-label="Campus Information Categories">
-            <div class="ribbon-label"><i class="fa-solid fa-filter"></i> Quick Filter:</div>
+            <div class="ribbon-label"><i class="fa-solid fa-layer-group"></i> Categories:</div>
             <div class="category-scroll-container" id="categoryContainer">
                 {% for cat in categories %}
                 <button class="category-chip {% if cat.id == 'all' %}active{% endif %}" data-category="{{ cat.id }}"
@@ -87,103 +90,125 @@
             </div>
         </nav>
 
+        <!-- Live Campus Pulse Ticker Strip -->
+        <div class="campus-live-bar" id="campusLiveBar">
+            <span class="live-strip-title"><i class="fa-solid fa-bolt"></i> Live Pulse:</span>
+            <div class="live-strip-items">
+                <button class="live-pill" type="button" data-prompt="What are the Central Library working hours and rules?">
+                    <span class="live-dot pulse-emerald"></span> 📖 <b>Library:</b> Open 8 AM – 9 PM
+                </button>
+                <button class="live-pill" type="button" data-prompt="What are the college bus schedules and route timings?">
+                    <span class="live-dot pulse-blue"></span> 🚌 <b>Buses:</b> 18 Routes Active
+                </button>
+                <button class="live-pill" type="button" data-prompt="What is the tuition fee structure, payment portal, and late fine policy?">
+                    <span class="live-dot pulse-amber"></span> 💳 <b>Fee Portal:</b> Online ERP Open
+                </button>
+                <button class="live-pill" type="button" data-prompt="What is the 75% attendance rule for semester exams and hall tickets?">
+                    <span class="live-dot pulse-purple"></span> 🎓 <b>Exams:</b> 75% Attendance Rule
+                </button>
+                <button class="live-pill" type="button" data-prompt="What are the placement statistics, top companies, and highest package?">
+                    <span class="live-dot pulse-rose"></span> 💼 <b>Placements:</b> 28.5 LPA Top CTC
+                </button>
+            </div>
+        </div>
+
         <!-- Chat Main Area -->
         <main class="chat-viewport" id="chatViewport">
             <div class="chat-container" id="chatContainer">
 
                 <!-- Welcome Hero View (Shown on new session) -->
                 <div class="welcome-hero" id="welcomeHero">
+                    <div class="hero-campus-badge">
+                        <i class="fa-solid fa-graduation-cap"></i> 24/7 Digital Student Advisor • Session 2025–26
+                    </div>
+
                     <div class="hero-icon-card">
+                        <div class="hero-icon-ring"></div>
                         <div class="hero-icon-circle">
-                            <img src="static/img/jgi-logo.png" class="logo-shield">
+                            <img src="static/img/jgi-logo.png" class="hero-logo-img" alt="JGI Logo">
                         </div>
                     </div>
-                    <h2 class="hero-heading">Welcome to <span class="gradient-text">JITD</span></h2>
+
+                    <h2 class="hero-heading">Welcome to <span class="gradient-text">JITD CampusAI</span></h2>
                     <p class="hero-subtext">
-                        Your 24/7 intelligent single-point campus guide. Ask anything about college hours, department
-                        contacts, courses, fees, examination schedules, placement statistics, scholarships, classroom
+                        Your intelligent single-point university guide. Ask anything in natural language about
+                        timings, department contacts, syllabus, semester fees, VTU exam rules, scholarships, classroom
                         locators, or campus fests!
                     </p>
 
-                    <!-- Feature Pills -->
+                    <!-- Feature Counter / Highlights -->
                     <div class="hero-features">
-                        <span class="feature-tag"><i class="fa-solid fa-bolt"></i> Instant Vector
-                            Search</span>
-                        <span class="feature-tag"><i class="fa-solid fa-shield-halved"></i> Verified Campus
-                            Records</span>
+                        <span class="feature-tag"><i class="fa-solid fa-building-columns"></i> 10+ Departments</span>
+                        <span class="feature-tag"><i class="fa-solid fa-shield-halved"></i> 100% Verified Records</span>
+                        <span class="feature-tag"><i class="fa-solid fa-bolt"></i> Instant Neural Search</span>
                         <span class="feature-tag"><i class="fa-solid fa-microphone"></i> Voice Enabled</span>
-                        <span class="feature-tag"><i class="fa-solid fa-server"></i> Flask Native RAG</span>
                     </div>
 
                     <!-- Quick Starter Queries Grid -->
                     <div class="quick-prompts-section">
-                        <h3 class="quick-prompts-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Popular
-                            Inquiries</h3>
+                        <div class="quick-prompts-header">
+                            <h3 class="quick-prompts-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Popular Campus Inquiries</h3>
+                            <span class="quick-prompts-sub">Click any question to ask instantly</span>
+                        </div>
                         <div class="prompt-cards-grid" id="promptCardsGrid">
-                            <div class="prompt-card"
+                            <div class="prompt-card card-library"
                                 data-prompt="What are the central library working hours on weekdays and weekends?">
-                                <div class="prompt-card-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+                                <div class="prompt-card-icon icon-blue"><i class="fa-solid fa-book-open-reader"></i></div>
                                 <div class="prompt-card-content">
                                     <span class="prompt-card-title">Library Hours</span>
-                                    <span class="prompt-card-desc">Weekday & weekend reading hall timings & book
-                                        borrowing rules</span>
+                                    <span class="prompt-card-desc">Weekday & weekend reading hall timings & book borrowing limits</span>
                                 </div>
-                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                                <i class="fa-solid fa-arrow-right prompt-arrow"></i>
                             </div>
 
-                            <div class="prompt-card"
+                            <div class="prompt-card card-fees"
                                 data-prompt="What is the tuition fee structure, payment portal, and late fine policy?">
-                                <div class="prompt-card-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                                <div class="prompt-card-icon icon-emerald"><i class="fa-solid fa-file-invoice-dollar"></i></div>
                                 <div class="prompt-card-content">
                                     <span class="prompt-card-title">Fees & Payment</span>
-                                    <span class="prompt-card-desc">B.E tuition fee, ERP portal steps, and installment
-                                        due dates</span>
+                                    <span class="prompt-card-desc">B.E tuition fees, ERP portal steps, and installment deadlines</span>
                                 </div>
-                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                                <i class="fa-solid fa-arrow-right prompt-arrow"></i>
                             </div>
 
-                            <div class="prompt-card"
+                            <div class="prompt-card card-placements"
                                 data-prompt="What are the placement statistics, top companies, and highest package?">
-                                <div class="prompt-card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                                <div class="prompt-card-icon icon-amber"><i class="fa-solid fa-briefcase"></i></div>
                                 <div class="prompt-card-content">
                                     <span class="prompt-card-title">Campus Placements</span>
-                                    <span class="prompt-card-desc">Highest & average CTC packages, Amazon/Microsoft
-                                        drives</span>
+                                    <span class="prompt-card-desc">28.5 LPA highest CTC, Amazon/Microsoft drives & eligibility</span>
                                 </div>
-                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                                <i class="fa-solid fa-arrow-right prompt-arrow"></i>
                             </div>
 
-                            <div class="prompt-card"
+                            <div class="prompt-card card-rooms"
                                 data-prompt="Where is Alan Turing Block and how can I find room TB-301?">
-                                <div class="prompt-card-icon"><i class="fa-solid fa-compass"></i></div>
+                                <div class="prompt-card-icon icon-purple"><i class="fa-solid fa-map-location-dot"></i></div>
                                 <div class="prompt-card-content">
                                     <span class="prompt-card-title">Classrooms & Navigation</span>
-                                    <span class="prompt-card-desc">Turing & Newton Block room numbering guide and lab
-                                        locations</span>
+                                    <span class="prompt-card-desc">Turing & Newton Block room numbering guide and lab locations</span>
                                 </div>
-                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                                <i class="fa-solid fa-arrow-right prompt-arrow"></i>
                             </div>
 
-                            <div class="prompt-card"
+                            <div class="prompt-card card-exams"
                                 data-prompt="What is the 75% attendance rule for semester exams and hall tickets?">
-                                <div class="prompt-card-icon"><i class="fa-solid fa-user-clock"></i></div>
+                                <div class="prompt-card-icon icon-rose"><i class="fa-solid fa-graduation-cap"></i></div>
                                 <div class="prompt-card-content">
                                     <span class="prompt-card-title">Exam Attendance Policy</span>
-                                    <span class="prompt-card-desc">75% criteria, medical condonation, and ERP hall
-                                        ticket eligibility</span>
+                                    <span class="prompt-card-desc">75% criteria, medical condonation, and ERP hall ticket eligibility</span>
                                 </div>
-                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                                <i class="fa-solid fa-arrow-right prompt-arrow"></i>
                             </div>
 
-                            <div class="prompt-card"
+                            <div class="prompt-card card-scholarships"
                                 data-prompt="What institutional and government scholarships are available?">
-                                <div class="prompt-card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                                <div class="prompt-card-icon icon-cyan"><i class="fa-solid fa-award"></i></div>
                                 <div class="prompt-card-content">
                                     <span class="prompt-card-title">Scholarships & Aid</span>
-                                    <span class="prompt-card-desc">Merit fee waivers, NSP portal steps, and documents
-                                        required</span>
+                                    <span class="prompt-card-desc">Merit fee waivers, NSP portal steps, and documents required</span>
                                 </div>
-                                <i class="fa-solid fa-chevron-right prompt-arrow"></i>
+                                <i class="fa-solid fa-arrow-right prompt-arrow"></i>
                             </div>
                         </div>
                     </div>

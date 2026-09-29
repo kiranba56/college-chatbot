@@ -251,6 +251,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Live Campus Pulse Ticker Pills
+    document.querySelectorAll('.live-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+            const promptText = pill.dataset.prompt;
+            if (promptText) {
+                elements.chatInput.value = promptText;
+                handleSendMessage();
+            }
+        });
+    });
+
     // =========================================================================
     // Clear / Reset Conversation
     // =========================================================================
@@ -394,10 +405,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         msgDiv.innerHTML = `
             <div class="message-avatar">
-                <i class="fa-solid fa-robot"></i>
+                <i class="fa-solid fa-graduation-cap"></i>
             </div>
             <div class="message-bubble-wrapper">
                 <div class="message-bubble">
+                    <div class="bot-msg-header">
+                        <div class="bot-msg-title">
+                            <span class="bot-sparkle-icon"><i class="fa-solid fa-robot"></i></span>
+                            <span class="bot-author-name">Campus AI</span>
+                        </div>
+                        <span class="bot-verified-pill"><i class="fa-solid fa-circle-check"></i> Verified Campus Record</span>
+                    </div>
                     ${renderedHtml}
                 </div>
                 <div class="message-actions-bar">
@@ -571,14 +589,17 @@ document.addEventListener('DOMContentLoaded', () => {
         utterance.pitch = 1.0;
 
         utterance.onstart = () => {
-            buttonElement.innerHTML = '<i class="fa-solid fa-stop text-warning"></i>';
+            buttonElement.classList.add('tts-active');
+            buttonElement.innerHTML = '<span class="audio-equalizer"><span></span><span></span><span></span></span>';
         };
 
         utterance.onend = () => {
+            buttonElement.classList.remove('tts-active');
             buttonElement.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
         };
 
         utterance.onerror = () => {
+            buttonElement.classList.remove('tts-active');
             buttonElement.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
         };
 
