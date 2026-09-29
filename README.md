@@ -2,6 +2,8 @@
 
 An enterprise-grade, intelligent digital campus assistant designed to solve information fragmentation across universities. Students, parents, faculty, and prospective students can ask questions in natural language and receive immediate, verified answers regarding **timings, departments, faculty directory, courses, fees, exams, placements, scholarships, classrooms, and facilities**.
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/kiranba56/college-chatbot)
+
 ---
 
 ## 🌟 Tech Stack & Architecture
