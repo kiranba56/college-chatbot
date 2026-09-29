@@ -142,17 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (matches.length === 0) return null;
 
         const best = matches[0].doc;
-        let reply = `### 📌 ${best.title}\n*Category: ${best.category.charAt(0).toUpperCase() + best.category.slice(1)}*\n\n${best.content}\n\n`;
+        let reply = `### 📌 ${best.title}\n*Category: ${best.category.charAt(0).toUpperCase() + best.category.slice(1)}*\n\n${best.content}`;
 
-        reply += `> 💡 **Verified Campus Knowledge**: Retrieved directly from official college records.`;
-
-        const sources = matches.slice(0, 3).map(m => ({
-            title: m.doc.title,
-            category: m.doc.category,
-            id: m.doc.id
-        }));
-
-        return { reply, sources };
+        return { reply, sources: [] };
     }
 
     function getSuggestedQuestionsForQuery(query, category) {
@@ -400,30 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Render Markdown safely
         const renderedHtml = window.marked ? marked.parse(replyMarkdown) : replyMarkdown.replace(/\n/g, '<br>');
 
-        // Render sources accordion if available
-        let sourcesHtml = '';
-        if (sources && sources.length > 0) {
-            const sourceItems = sources.map(s => `
-                <div class="source-item">
-                    <div class="source-title-row">
-                        <span class="source-title"><i class="fa-solid fa-file-lines"></i> ${escapeHtml(s.title || 'Official College Record')}</span>
-                        <span class="source-score">${Math.round((s.similarity || 0.85) * 100)}% match</span>
-                    </div>
-                    <div class="source-snippet">${escapeHtml((s.content || '').substring(0, 140))}...</div>
-                </div>
-            `).join('');
-
-            sourcesHtml = `
-                <div class="sources-accordion">
-                    <div class="sources-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
-                        <span><i class="fa-solid fa-database"></i> Verified Sources (${sources.length} matching college records)</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="sources-list">${sourceItems}</div>
-                </div>
-            `;
-        }
-
         msgDiv.innerHTML = `
             <div class="message-avatar">
                 <i class="fa-solid fa-robot"></i>
@@ -431,7 +399,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="message-bubble-wrapper">
                 <div class="message-bubble">
                     ${renderedHtml}
-                    ${sourcesHtml}
                 </div>
                 <div class="message-actions-bar">
                     <span class="msg-timestamp">${timeStr}</span>

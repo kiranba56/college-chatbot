@@ -326,12 +326,7 @@ COLLEGE KNOWLEDGE CONTEXT:
         category = top_doc.get("category", "General").title()
 
         response_md = f"### 📌 {title}\n*Category: {category}*\n\n"
-        response_md += f"{content}\n\n"
-
-        response_md += (
-            f"> 💡 **Verified Campus Knowledge**: Retrieved directly from official college records. "
-            f"Need further assistance? Visit the respective department office or email `support@college.edu`."
-        )
+        response_md += f"{content}"
 
         return response_md
 
