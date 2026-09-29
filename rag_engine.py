@@ -269,6 +269,7 @@ RULES:
    - Use markdown tables if comparing multiple options or fee slabs.
 4. If the exact answer is not in the context, politely state what you know and guide the student to the relevant department (e.g. Student Section Counter 3, Dean Academics, or HOD Cabin).
 5. Always maintain a professional, helpful, collegiate tone.
+6. Answer ONLY the specific question asked. Do NOT append unsolicited 'Related Information' or General Gate Operating Hours unless the user explicitly asks for them.
 
 COLLEGE KNOWLEDGE CONTEXT:
 {context}
@@ -327,13 +328,8 @@ COLLEGE KNOWLEDGE CONTEXT:
         response_md = f"### 📌 {title}\n*Category: {category}*\n\n"
         response_md += f"{content}\n\n"
 
-        if len(retrieved_docs) > 1 and retrieved_docs[1].get("similarity", 0) > 0.20:
-            doc2 = retrieved_docs[1]
-            response_md += f"---\n\n#### 🔍 Related Information: {doc2.get('title', '')}\n"
-            response_md += f"{doc2.get('content', '')}\n\n"
-
         response_md += (
-            f"> 💡 **Verified Campus Knowledge**: Retrieved directly from the college registrar database. "
+            f"> 💡 **Verified Campus Knowledge**: Retrieved directly from official college records. "
             f"Need further assistance? Visit the respective department office or email `support@college.edu`."
         )
 

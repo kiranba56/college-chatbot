@@ -144,11 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const best = matches[0].doc;
         let reply = `### 📌 ${best.title}\n*Category: ${best.category.charAt(0).toUpperCase() + best.category.slice(1)}*\n\n${best.content}\n\n`;
 
-        if (matches.length > 1 && matches[1].score > 3.5) {
-            const second = matches[1].doc;
-            reply += `---\n\n#### 🔍 Related Information: ${second.title}\n${second.content}\n\n`;
-        }
-
         reply += `> 💡 **Verified Campus Knowledge**: Retrieved directly from official college records.`;
 
         const sources = matches.slice(0, 3).map(m => ({
