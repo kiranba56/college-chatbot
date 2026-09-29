@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
         isGenerating: false,
         speechSynthesisActive: false,
         speechRecognition: null,
-        isRecording: false
+        isRecording: false,
+        backendUrl: localStorage.getItem('college_chatbot_backend_url') || '',
+        isStaticDeployment: window.location.hostname.includes('github.io') || window.location.protocol === 'file:'
     };
 
     // DOM Elements
@@ -65,6 +67,137 @@ document.addEventListener('DOMContentLoaded', () => {
             breaks: true,
             headerIds: false
         });
+    }
+
+    // =========================================================================
+    // Client-Side Knowledge Engine (Autonomous Fallback for GitHub Pages)
+    // =========================================================================
+    let clientKnowledgeCache = null;
+
+    async function getClientKnowledgeDocs() {
+        if (clientKnowledgeCache && clientKnowledgeCache.length > 0) {
+            return clientKnowledgeCache;
+        }
+        const possiblePaths = ['data/college_knowledge.json', './data/college_knowledge.json', '../data/college_knowledge.json'];
+        for (const p of possiblePaths) {
+            try {
+                const res = await fetch(p);
+                if (res.ok) {
+                    clientKnowledgeCache = await res.json();
+                    return clientKnowledgeCache;
+                }
+            } catch (err) {
+                // try next path
+            }
+        }
+        return [];
+    }
+
+    // Preload knowledge base in background
+    getClientKnowledgeDocs();
+
+    function searchClientKnowledge(query, category, docs) {
+        if (!docs || docs.length === 0) return null;
+        const q = query.toLowerCase().trim();
+        const rawTokens = q.match(/\b[a-z0-9_-]{2,}\b/g) || [];
+        const stopWords = new Set([
+            'the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'in', 'of', 'for', 'to',
+            'with', 'about', 'by', 'as', 'into', 'like', 'through', 'after', 'over', 'between',
+            'out', 'against', 'during', 'without', 'before', 'under', 'around', 'among', 'what',
+            'where', 'when', 'how', 'who', 'does', 'can', 'are', 'i', 'my', 'please', 'tell', 'me', 'details'
+        ]);
+        const tokens = rawTokens.filter(t => !stopWords.has(t));
+
+        const scored = docs.map(doc => {
+            let score = 0;
+            const titleLower = (doc.title || '').toLowerCase();
+            const contentLower = (doc.content || '').toLowerCase();
+            const keywords = (doc.keywords || []).map(k => k.toLowerCase());
+            const cat = (doc.category || '').toLowerCase();
+
+            if (category && category !== 'all' && cat === category.toLowerCase()) {
+                score += 3;
+            }
+
+            if (titleLower.includes(q)) score += 12;
+            if (contentLower.includes(q)) score += 6;
+
+            for (const kw of keywords) {
+                if (q.includes(kw)) score += 8;
+                for (const t of tokens) {
+                    if (kw.includes(t)) score += 3.5;
+                }
+            }
+
+            for (const t of tokens) {
+                if (titleLower.includes(t)) score += 4;
+                if (contentLower.includes(t)) score += 1.5;
+            }
+
+            return { doc, score };
+        });
+
+        scored.sort((a, b) => b.score - a.score);
+        const matches = scored.filter(s => s.score > 2);
+        if (matches.length === 0) return null;
+
+        const best = matches[0].doc;
+        let reply = `### 📌 ${best.title}\n*Category: ${best.category.charAt(0).toUpperCase() + best.category.slice(1)}*\n\n${best.content}\n\n`;
+
+        if (matches.length > 1 && matches[1].score > 3.5) {
+            const second = matches[1].doc;
+            reply += `---\n\n#### 🔍 Related Information: ${second.title}\n${second.content}\n\n`;
+        }
+
+        reply += `> 💡 **Verified Campus Knowledge**: Retrieved directly from official college records.`;
+
+        const sources = matches.slice(0, 3).map(m => ({
+            title: m.doc.title,
+            category: m.doc.category,
+            id: m.doc.id
+        }));
+
+        return { reply, sources };
+    }
+
+    function getSuggestedQuestionsForQuery(query, category) {
+        const qLower = query.toLowerCase();
+        if (qLower.includes('fee') || qLower.includes('pay') || category === 'fees') {
+            return [
+                "What is the fee payment deadline and late fine policy?",
+                "Are there any merit-based scholarships or fee waivers?",
+                "What are the hostel and mess charges?"
+            ];
+        } else if (qLower.includes('time') || qLower.includes('hour') || qLower.includes('schedule') || category === 'timings') {
+            return [
+                "What are the Central Library timings on weekends?",
+                "When do the college buses depart in the evening?",
+                "What are the Administrative Office counter timings?"
+            ];
+        } else if (qLower.includes('exam') || qLower.includes('result') || category === 'examinations') {
+            return [
+                "What is the minimum attendance required for exam eligibility?",
+                "How do I apply for paper re-evaluation?",
+                "What is the internal vs end-semester mark distribution?"
+            ];
+        } else if (qLower.includes('place') || qLower.includes('salary') || qLower.includes('package') || category === 'placements') {
+            return [
+                "What are the eligibility criteria for campus placement drives?",
+                "What was the highest and average CTC package this year?",
+                "How can I get an NOC for an off-campus 8th-semester internship?"
+            ];
+        } else if (qLower.includes('facult') || qLower.includes('prof') || qLower.includes('hod') || category === 'faculty') {
+            return [
+                "Who is the HOD of CSE and when are his office hours?",
+                "How can I contact faculty members?",
+                "What are the research areas of our professors?"
+            ];
+        }
+        return [
+            "What are the Central Library working hours?",
+            "What are the college bus schedules and routes?",
+            "How can I apply for institutional scholarships?"
+        ];
     }
 
     // =========================================================================
@@ -174,21 +307,48 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollToBottom();
 
         try {
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    message: query,
-                    category: state.selectedCategory,
-                    session_id: state.sessionId,
-                    history: state.chatHistory.slice(-4)
-                })
-            });
+            const apiBase = state.backendUrl ? state.backendUrl.replace(/\/+$/, '') : '';
+            let data = null;
 
-            const data = await response.json();
+            // Try backend API first if not running purely as static without custom backend
+            if (!state.isStaticDeployment || state.backendUrl) {
+                try {
+                    const response = await fetch(`${apiBase}/api/chat`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            message: query,
+                            category: state.selectedCategory,
+                            session_id: state.sessionId,
+                            history: state.chatHistory.slice(-4)
+                        })
+                    });
+                    if (response.ok) {
+                        data = await response.json();
+                    }
+                } catch (netErr) {
+                    console.log('Backend not reachable, switching to client knowledge engine:', netErr);
+                }
+            }
+
+            // Fallback to client-side RAG search if backend returned null or failed
+            if (!data || !data.success) {
+                const docs = await getClientKnowledgeDocs();
+                const clientResult = searchClientKnowledge(query, state.selectedCategory, docs);
+                if (clientResult) {
+                    data = {
+                        success: true,
+                        reply: clientResult.reply,
+                        sources: clientResult.sources,
+                        model: "Campus AI (Client RAG Engine)",
+                        suggested_questions: getSuggestedQuestionsForQuery(query, state.selectedCategory)
+                    };
+                }
+            }
+
             hideTypingIndicator();
 
-            if (data.success) {
+            if (data && data.success) {
                 appendBotMessage(data.reply, data.sources, data.log_id, data.model);
                 updateSuggestedChips(data.suggested_questions);
                 // Save history
@@ -196,17 +356,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 state.chatHistory.push({ role: 'assistant', content: data.reply });
             } else {
                 appendBotMessage(
-                    "⚠️ **Service Notice**: We encountered an issue retrieving verified records. Please check the Knowledge Directory or try again.",
+                    "⚠️ I couldn't find a direct record matching that query. Try asking about **timings, courses, fees, exams, placements, faculty, or library**, or open the **Knowledge Directory** from the menu above.",
                     [],
                     null,
-                    "System"
+                    "Campus Directory"
                 );
             }
         } catch (error) {
             console.error('Chat error:', error);
             hideTypingIndicator();
             appendBotMessage(
-                "⚠️ **Network Error**: Unable to reach the backend server. Please verify your connection or refresh the page.",
+                "⚠️ **Network Error**: Unable to complete the request. Please verify your connection or refresh the page.",
                 [],
                 null,
                 "Error"
@@ -499,15 +659,38 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.explorerGrid.innerHTML = '<div class="loading-state"><span class="spinner-dot"></span> Loading directory...</div>';
 
         try {
-            const res = await fetch(`/api/knowledge?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}`);
-            const data = await res.json();
+            const apiBase = state.backendUrl ? state.backendUrl.replace(/\/+$/, '') : '';
+            let docs = null;
 
-            if (!data.success || data.documents.length === 0) {
+            if (!state.isStaticDeployment || state.backendUrl) {
+                try {
+                    const res = await fetch(`${apiBase}/api/knowledge?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.success) docs = data.documents;
+                    }
+                } catch (netErr) {}
+            }
+
+            if (!docs) {
+                const allDocs = await getClientKnowledgeDocs();
+                docs = allDocs.filter(d => {
+                    const matchCategory = !category || category === 'all' || (d.category || '').toLowerCase() === category.toLowerCase();
+                    const s = search.toLowerCase();
+                    const matchSearch = !s ||
+                        (d.title || '').toLowerCase().includes(s) ||
+                        (d.content || '').toLowerCase().includes(s) ||
+                        (d.keywords || []).some(k => k.toLowerCase().includes(s));
+                    return matchCategory && matchSearch;
+                });
+            }
+
+            if (!docs || docs.length === 0) {
                 elements.explorerGrid.innerHTML = '<div class="loading-state">No matching college records found. Try another search keyword.</div>';
                 return;
             }
 
-            elements.explorerGrid.innerHTML = data.documents.map(doc => `
+            elements.explorerGrid.innerHTML = docs.map(doc => `
                 <div class="doc-card">
                     <span class="doc-card-badge">${escapeHtml(doc.category)}</span>
                     <h4 class="doc-card-title">${escapeHtml(doc.title)}</h4>
@@ -587,21 +770,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchSystemStatus() {
         try {
-            const res = await fetch('/api/status');
-            const data = await res.json();
+            const apiBase = state.backendUrl ? state.backendUrl.replace(/\/+$/, '') : '';
+            let data = null;
 
-            // Update modal values
-            elements.statusSupabaseValue.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check"></i> ' + (data.database || 'Flask SQLite (Embedded)') + '</span>';
+            if (!state.isStaticDeployment || state.backendUrl) {
+                try {
+                    const res = await fetch(`${apiBase}/api/status`);
+                    if (res.ok) data = await res.json();
+                } catch (netErr) {}
+            }
 
-            elements.statusLLMValue.innerHTML = data.gemini_api_configured
-                ? `<span class="text-success"><i class="fa-solid fa-circle-check"></i> ${data.llm_model}</span>`
-                : '<span class="text-warning"><i class="fa-solid fa-circle-info"></i> Verified Campus RAG Fallback</span>';
-
-            elements.statusDocsValue.textContent = `${data.total_documents_indexed} Documents`;
-
-            // Update badge on navbar
-            elements.ragStatusBadge.innerHTML = '<i class="fa-solid fa-server"></i> Flask Native RAG Active';
-            elements.ragStatusBadge.className = 'badge-rag';
+            if (data) {
+                elements.statusSupabaseValue.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check"></i> ' + (data.database || 'Flask SQLite (Embedded)') + '</span>';
+                elements.statusLLMValue.innerHTML = data.gemini_api_configured
+                    ? `<span class="text-success"><i class="fa-solid fa-circle-check"></i> ${data.llm_model}</span>`
+                    : '<span class="text-warning"><i class="fa-solid fa-circle-info"></i> Verified Campus RAG Fallback</span>';
+                elements.statusDocsValue.textContent = `${data.total_documents_indexed} Documents`;
+                elements.ragStatusBadge.innerHTML = '<i class="fa-solid fa-server"></i> Cloud Backend Active';
+                elements.ragStatusBadge.className = 'badge-rag';
+            } else {
+                const docs = await getClientKnowledgeDocs();
+                elements.statusSupabaseValue.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check"></i> GitHub Pages Static RAG Engine</span>';
+                elements.statusLLMValue.innerHTML = '<span class="text-info"><i class="fa-solid fa-bolt"></i> Verified Campus Knowledge Base</span>';
+                elements.statusDocsValue.textContent = `${docs.length} Official Documents`;
+                elements.ragStatusBadge.innerHTML = '<i class="fa-solid fa-globe"></i> GitHub Pages Active';
+                elements.ragStatusBadge.className = 'badge-rag';
+            }
         } catch (e) {
             console.error('Status check error:', e);
         }
